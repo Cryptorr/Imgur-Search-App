@@ -20,7 +20,7 @@ var app = express();
 var uristring =
 process.env.MONGOLAB_URI ||
 process.env.MONGOHQ_URL ||
-'mongodb://localhost/HelloMongoose';
+'mongodb://admin:11567364Bb@ds063870.mongolab.com:63870/imgursearch';
 
 var db = mongoose.connect(uristring, function (err, res) {
   if (err) {
