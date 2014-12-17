@@ -1,8 +1,17 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+.header {height: 100px;}
+.imgur-gallery {background-color: #dddddd; height: 250px; position: relative; }
 
-a {
-  color: #00B7FF;
-}
+.imagesearch {margin: 0 auto; width: 300px;}
+
+.gallery-wrap { margin: 10px auto; overflow: hidden; width: 732px; height: 175px;}
+.gallery { position: relative; left: 0; top: 0; }
+.gallery__item { float: left; list-style: none; margin-right: 20px; }
+.gallery__img { display: block; border: 4px solid #000000; height: 175px; width: auto; }
+
+.gallery__controls { margin-top: 10px; width: 732px; position: absolute; bottom: 0;}
+.gallery__controls-prev { cursor: pointer; float: left; }
+.gallery__controls-next { cursor: pointer; float: right; }
+
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1;}

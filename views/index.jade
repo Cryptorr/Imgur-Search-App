@@ -1,5 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div(class="imgur-gallery container-fluid", id="content")
+    div(class="gallery-wrap")
+      div(class="gallery clearfix", id="imgur-results")
+      div(class="gallery__controls clearfix", role="group", aria-label="Controls")
+        button(type="button", class="btn btn-default gallery__controls-prev")
+          span(class="glyphicon glyphicon-chevron-left", aria-hidden="true")
+        button(type="button", class="btn btn-default gallery__controls-next")
+          span(class="glyphicon glyphicon-chevron-right", aria-hidden="true")
+        div(class="form-group form-group-sm imagesearchbar")
+          input(type="text", name="imagesearch", id="imagesearch", class="imagesearch form-control", placeholder="Search Imgur...")
