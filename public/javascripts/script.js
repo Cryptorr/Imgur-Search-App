@@ -77,7 +77,6 @@ $(window).load(function(){
     $.ajax({
       type: 'GET',
       url: '/api/getfrontpage',
-      //data: {search:sq},
       dataType: 'JSON',
       success: function(data) {
         refreshGallery(data);
@@ -91,8 +90,13 @@ $(window).load(function(){
     // Search imgur for related pictures
   $('#imagesearch').bind('input propertychange', function() {
     document.location.hash = escape($('#imagesearch').val());
-    //console.log($('#imagesearch').val());
-    getImages($('#imagesearch').val());
+    if (canSearch) {
+      canSearch = false;
+      setTimeout(function(){
+        canSearch = true;
+        getImages($('#imagesearch').val());
+      }, 500);
+    }
   });
 
   // When the prev button is clicked
