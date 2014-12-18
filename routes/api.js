@@ -1,55 +1,78 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET Userlist page. */
-router.get('/userlist', function(req, res) {
-    var db = req.db;
-    var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
-        res.render('userlist', {
-            "userlist" : docs
-        });
+var querystring = require('querystring');
+var https = require('https');
+
+var host = 'api.imgur.com';
+var apiKey = 'f89d4ded7144f40';
+
+function imgurRequest(endpoint, method, data, success) {
+  var dataString = JSON.stringify(data);
+
+  if (method == 'GET') {
+    endpoint += '?' + querystring.stringify(data);
+  }
+
+  var headers = {
+    'Authorization': 'Client-ID ' + apiKey,
+    'Accept': 'application/json'
+  };
+
+  var options = {
+    host: host,
+    path: endpoint,
+    method: method,
+    headers: headers
+  };
+
+  var req = https.request(options, function(res) {
+    res.setEncoding('utf-8');
+
+    var responseString = '';
+
+    res.on('data', function(data) {
+      responseString += data;
+    });
+
+    res.on('end', function() {
+      console.log(responseString);
+      var responseObject = JSON.parse(responseString);
+      success(responseObject);
+    });
+  });
+
+  req.write(dataString);
+  req.end();
+}
+
+// Provide images
+router.post('/getimages', function(req, res) {
+    var data = {
+      'sort': 'viral',
+      'page': '0',
+      'q': req.body.search
+    };
+
+    imgurRequest('/3/gallery/search', 'GET', data, function(results) {
+      res.send(results);
     });
 });
 
-/* GET New User page. */
-router.get('/newuser', function(req, res) {
-    res.render('newuser', { title: 'Add New User' });
-});
+// Provide images for frontpage
+router.get('/getfrontpage', function(req, res) {
+    var data = {
+      'sort': 'viral',
+      'page': '0',
+      'section': 'hot'
+    };
 
-/* POST to Add User Service */
-router.post('/addupvote', function(req, res) {
-
-    // Set our internal DB variable
-    var db = req.db;
-
-    // Get our form values. These rely on the "name" attributes
-    var userName = req.body.username;
-    var userEmail = req.body.useremail;
-
-    // Set our collection
-    var collection = db.get('usercollection');
-
-    // Submit to the DB
-    collection.insert({
-        "username" : userName,
-        "email" : userEmail
-    }, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        }
-        else {
-            // If it worked, set the header so the address bar doesn't still say /adduser
-            res.location("userlist");
-            // And forward to success page
-            res.redirect("userlist");
-        }
+    imgurRequest('/3/gallery', 'GET', data, function(results) {
+      res.send(results);
     });
 });
 
-
-/* Home page */
+// Api home page
 router.get('/', function(req, res) {
     res.render('api', { title: 'Imgur Search App API' });
 });

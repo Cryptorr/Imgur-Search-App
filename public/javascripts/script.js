@@ -1,25 +1,18 @@
 // Init
 var totalWidth = 0;
 var maxScrollPosition = 0;
-var canSearch = true;
 
 function getImages(sq){
   $.ajax({
-    url: 'https://api.imgur.com/3/gallery/search',
-    headers: {
-        Authorization: 'Client-ID f89d4ded7144f40',
-        Accept: 'application/json'
-    },
-    type: 'GET',
-    data: {
-        q: sq ,
-        sort: 'viral'
-    },
+    type: 'POST',
+    url: '/api/getimages',
+    data: {search:sq},
+    dataType: 'JSON',
     success: function(data) {
-        refreshGallery(data);
+      refreshGallery(data);
     },
     error: function() {
-      alert('Could not reach api.imgur.com.');
+      alert('Could not reach server.');
     }
   });
 }
@@ -82,37 +75,24 @@ $(window).load(function(){
   else{
     //Initial state (get imgur frontpage pictures)
     $.ajax({
-      url: 'https://api.imgur.com/3/gallery',
-      headers: {
-          Authorization: 'Client-ID f89d4ded7144f40',
-          Accept: 'application/json'
-      },
       type: 'GET',
-      data: {
-          section: 'hot',
-          sort: 'viral',
-          window: 'day'
-      },
+      url: '/api/getfrontpage',
+      //data: {search:sq},
+      dataType: 'JSON',
       success: function(data) {
-          refreshGallery(data);
+        refreshGallery(data);
       },
       error: function() {
-        alert('Could not reach api.imgur.com.');
+        alert('Could not reach server.');
       }
     });
   }
 
     // Search imgur for related pictures
   $('#imagesearch').bind('input propertychange', function() {
-    // Lock when typing, only search every 1 second
-    if (canSearch) {
-      canSearch = false;
-      setTimeout(function(){
-        canSearch = true;
-        document.location.hash = escape($('#imagesearch').val());
-        getImages($('#imagesearch').val());
-      }, 500);
-    }
+    document.location.hash = escape($('#imagesearch').val());
+    //console.log($('#imagesearch').val());
+    getImages($('#imagesearch').val());
   });
 
   // When the prev button is clicked

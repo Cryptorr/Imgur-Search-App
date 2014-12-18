@@ -7,7 +7,8 @@ var ImageSchema   = new Schema({
   id: String,
 	name: String,
   meta: {
-    upvotes: Number
+    upvotes: Number,
+    link: String
   }
 });
 
