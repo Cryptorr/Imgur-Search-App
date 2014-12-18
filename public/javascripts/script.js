@@ -1,7 +1,6 @@
 // Init
 var totalWidth = 0;
 var maxScrollPosition = 0;
-var canSearch = true;
 
 function getImages(sq){
   $.ajax({
@@ -91,13 +90,8 @@ $(window).load(function(){
     // Search imgur for related pictures
   $('#imagesearch').bind('input propertychange', function() {
     document.location.hash = escape($('#imagesearch').val());
-    if (canSearch) {
-      canSearch = false;
-      setTimeout(function(){
-        canSearch = true;
-        getImages($('#imagesearch').val());
-      }, 500);
-    }
+    //console.log($('#imagesearch').val());
+    getImages($('#imagesearch').val());
   });
 
   // When the prev button is clicked
