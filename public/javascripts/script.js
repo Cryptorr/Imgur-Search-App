@@ -41,6 +41,7 @@ function refreshGallery(data){
             title : data.title
           };
           serverRequest('/api/upvotes', 'POST', image, function(d){
+            console.log(d.message);
             //Make border green for upvoted image
             div.find(".gallery__img").css("border", "4px solid #85BF25");
             //One time only upvote

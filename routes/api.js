@@ -81,7 +81,7 @@ router.route('/upvotes')
 
         image.save(function(err) {
           if (err)
-            res.send(err);
+            res.json({ message: err});
           console.log('Image created');
           res.json({ message: 'Image created'});
         });
