@@ -7,8 +7,8 @@ var https = require('https');
 var mongoose = require('mongoose');
 //Setup db
 var uristring =
-process.env.MONGOLAB_URI ||
-process.env.MONGOHQ_URL ||
+//process.env.MONGOLAB_URI ||
+//process.env.MONGOHQ_URL ||
 'mongodb://admin:11567364Bb@ds063870.mongolab.com:63870/imgursearch';
 //Connect to db
 mongoose.connect(uristring, function (err, res) {
