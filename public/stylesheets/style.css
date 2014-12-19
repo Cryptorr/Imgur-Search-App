@@ -5,8 +5,8 @@
 
 .gallery-wrap { margin: 10px auto; overflow: hidden; width: 732px; height: 175px;}
 .gallery { position: relative; left: 0; top: 0; }
-.gallery__item { float: left; list-style: none; margin-right: 20px; }
-.gallery__img { display: block; border: 4px solid #000000; height: 175px; width: auto; }
+.gallery__item { float: left; list-style: none; margin-right: 20px; cursor: pointer; position:relative;}
+.gallery__img { vertical-align:top; display: block; border: 4px solid #000000; height: 175px; width: auto; z-index:-2;}
 
 .gallery__controls { margin-top: 10px; width: 732px; position: absolute; bottom: 0;}
 .gallery__controls-prev { cursor: pointer; float: left; }
@@ -15,3 +15,49 @@
 .clearfix:before, .clearfix:after { content: " "; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { *zoom: 1;}
+
+.gallery__item:after {
+    content:'\A';
+    position:absolute;
+    width:100%; height:100%;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background: url(/images/upvote.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity:0;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+.gallery__item:before {
+    position:absolute;
+    opacity:0;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    content: attr(data-content);
+    width:100%;
+    color:#fff;
+    font-size: 75%;
+    z-index:1;
+    bottom:0;
+    padding:4px 10px;
+    text-align:center;
+    background: #85BF25;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+
+.gallery__item:hover:after {
+    opacity:0.6;
+}
+
+.gallery__item:hover:before {
+    opacity:0.9;
+}
+
+.gallery__item-off:hover:after {
+    opacity:0;
+}

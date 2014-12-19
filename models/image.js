@@ -5,11 +5,8 @@ var Schema       = mongoose.Schema;
 
 var ImageSchema   = new Schema({
   id: String,
-	name: String,
-  meta: {
-    upvotes: Number,
-    link: String
-  }
-});
+	title: String,
+  upvotes: Number
+  });
 
 module.exports = mongoose.model('Image', ImageSchema);

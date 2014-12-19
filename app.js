@@ -16,25 +16,6 @@ var api = require('./routes/api');
 
 var app = express();
 
-//Setup db
-var uristring =
-process.env.MONGOLAB_URI ||
-process.env.MONGOHQ_URL ||
-'mongodb://admin:11567364Bb@ds063870.mongolab.com:63870/imgursearch';
-
-var db = mongoose.connect(uristring, function (err, res) {
-  if (err) {
-  console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-  } else {
-  console.log ('Succeeded connected to: ' + uristring);
-  }
-});
-// Make our db accessible to our router
-app.use(function(req,res,next){
-    req.db = db;
-    next();
-});
-
 //Setup stylus with nib
 function compile(str, path) {
   return stylus(str)
