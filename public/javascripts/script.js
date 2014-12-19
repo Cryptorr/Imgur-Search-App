@@ -36,7 +36,11 @@ function refreshGallery(data){
         $("<div/>").attr("class", "gallery__item").attr("data-content", data.title)
         .on("click",function(){
           var div = $(this);
-          serverRequest('/api/upvotes', 'POST', data, function(d){
+          var image = {
+            id : data.id,
+            title : data.title
+          };
+          serverRequest('/api/upvotes', 'POST', image, function(d){
             //Make border green for upvoted image
             div.find(".gallery__img").css("border", "4px solid #85BF25");
             //One time only upvote
